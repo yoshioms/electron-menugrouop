@@ -23,16 +23,6 @@ if (process.platform === 'darwin') {
     })
 }
 
-function addUpdateMenuItems(items, position) {
-    if (process.mas) return
-    items.splice.apply(items, [position, 0].concat(updateItems))
-}
-
-if (process.platform === 'win32') {
-    const helpMenu = template[template.length - 1].submenu
-    addUpdateMenuItems(helpMenu, 0)
-}
-
 app.on('ready', function() {
     const menu = Menu.buildFromTemplate(template)
     Menu.setApplicationMenu(menu)
