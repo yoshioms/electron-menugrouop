@@ -6,10 +6,7 @@ const app = electron.app
 
 let template = [{
     label: '編集',
-    submenu: [{
-            role: 'undo',
-            sublabel: 'sublabel'
-        },
+    submenu: [
         { label: 'コピー', position: 'endof=edit' },
         { label: '並べる', position: 'endof=window' },
         { label: 'アプリについて', position: 'endof=help' },
@@ -22,62 +19,12 @@ let template = [{
 if (process.platform === 'darwin') {
     const name = electron.app.getName()
     template.unshift({
-        label: name,
-        submenu: [{
-            role: 'about'
-        }, {
-            role: 'hide'
-        }, {
-            role: 'hideothers'
-        }, {
-            role: 'unhide'
-        }, {
-            role: 'startspeaking'
-        }, {
-            role: 'stopspeaking'
-        }, {
-            role: 'front'
-        }, {
-            role: 'zoom'
-        }, {
-            role: 'window'
-        }, {
-            role: 'help'
-        }, {
-            role: 'services'
-        }]
+        label: name
     })
-
-    addUpdateMenuItems(template[0].submenu, 1)
 }
 
 function addUpdateMenuItems(items, position) {
     if (process.mas) return
-
-    const version = electron.app.getVersion()
-    let updateItems = [{
-        label: `Version ${version}`,
-        enabled: false
-    }, {
-        label: 'Checking for Update',
-        enabled: false,
-        key: 'checkingForUpdate'
-    }, {
-        label: 'Check for Update',
-        visible: false,
-        key: 'checkForUpdate',
-        click: function() {
-            require('electron').autoUpdater.checkForUpdates()
-        }
-    }, {
-        label: 'Restart and Install Update',
-        enabled: true,
-        visible: false,
-        key: 'restartToUpdate',
-        click: function() {
-            require('electron').autoUpdater.quitAndInstall()
-        }
-    }]
     items.splice.apply(items, [position, 0].concat(updateItems))
 }
 
